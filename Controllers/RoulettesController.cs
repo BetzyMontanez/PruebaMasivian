@@ -29,7 +29,9 @@ namespace RouletteApi.Controllers
             }
             catch (MessageException exception)
             {
-                throw exception;
+                return Problem(
+                detail: exception.Message,
+                title: exception.StatusName);
             }
         }
 
@@ -44,7 +46,9 @@ namespace RouletteApi.Controllers
             }
             catch (MessageException exception)
             {
-                throw exception;
+                return Problem(
+                detail: exception.Message,
+                title: exception.StatusName);
             }
         }
 
@@ -58,7 +62,9 @@ namespace RouletteApi.Controllers
             }
             catch (MessageException exception)
             {
-                throw exception;
+                return Problem(
+                detail: exception.Message,
+                title: exception.StatusName);
             }
         }
 
@@ -72,7 +78,9 @@ namespace RouletteApi.Controllers
             }
             catch (MessageException exception)
             {
-                throw exception;
+                return Problem(
+                detail: exception.Message,
+                title: exception.StatusName);
             }
         }
 

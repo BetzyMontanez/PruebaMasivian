@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -20,6 +21,10 @@ namespace RouletteApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            //TODO change settings to use env vars
+            //Environment.GetEnvironmentVariable("ROULETTE_COLLECTION_NAME");
+            //Environment.GetEnvironmentVariable("ROULETTE_CONNECTION_STRING");
+            //Environment.GetEnvironmentVariable("ROULETTE_DATABASE_NAME");
             services.Configure<RouletteDatabaseSettings>(Configuration.GetSection(nameof(RouletteDatabaseSettings)));
             services.AddSingleton<IRouletteDatabaseSettings>(sp => sp.GetRequiredService<IOptions<RouletteDatabaseSettings>>().Value);
             services.AddSingleton<RouletteService>();

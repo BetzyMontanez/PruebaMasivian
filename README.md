@@ -16,7 +16,7 @@ Microsoft.AspNetCore.Mvc.NewtonsoftJson==3.1.9
 ```
 setx ROULETTE_COLLECTION_NAME Roulettes /m
 setx ROULETTE_CONNECTION_STRING mongodb://localhost:27017 /m
-setx ROULETTE_DATABASE?NAME RouletteDB /m
+setx ROULETTE_DATABASE_NAME RouletteDB /m
 ```
 
 ## API CURLs examples
