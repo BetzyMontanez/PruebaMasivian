@@ -1,20 +1,57 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# Roulette
+This component is responsible for next features:
+- Create new roulettes
+- Open and close roulettes
+- Make bets related to existents roulettes
+- List existent roulettes
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+## Main dependencies
+```
+MongoDB.Driver==2.11.3
+Microsoft.AspNet.WebApi.Core==5.2.7
+Microsoft.AspNetCore.Mvc.NewtonsoftJson==3.1.9
+```
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+## Environment variables
+```
+setx ROULETTE_COLLECTION_NAME Roulettes /m
+setx ROULETTE_CONNECTION_STRING mongodb://localhost:27017 /m
+setx ROULETTE_DATABASE?NAME RouletteDB /m
+```
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+## API CURLs examples
+### Create new roulette
+```
+curl --location --request POST 'http://localhost:5000/roulettes/'
+```
+### Open Roulette
+```
+curl --location --request PUT 'http://localhost:5000/roulettes/open' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "rouletteId": "123456"
+}'
+```
+### Bet into a Roulette
+```
+curl --location --request POST 'http://localhost:5000/roulettes/placeBet' \
+--header 'userId: 101010' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "rouletteId": "123456",
+    "betPlace": "number/colour",
+    "amount": 10000
+}'
+```
+### Close Roulette
+```
+curl --location --request PUT 'http://localhost:5000/roulettes/close' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "rouletteId": "123456"
+}'
+```
+### List Roulettes
+```
+curl --location --request GET 'http://localhost:5000/roulettes/'
+```

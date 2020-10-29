@@ -1,17 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using RouletteApi.Models;
+using RouletteApi.Services;
 
-namespace Roulette
+namespace RouletteApi
 {
     public class Startup
     {
@@ -22,26 +18,23 @@ namespace Roulette
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.Configure<RouletteDatabaseSettings>(Configuration.GetSection(nameof(RouletteDatabaseSettings)));
+            services.AddSingleton<IRouletteDatabaseSettings>(sp => sp.GetRequiredService<IOptions<RouletteDatabaseSettings>>().Value);
+            services.AddSingleton<RouletteService>();
+            services.AddControllers()
+                .AddNewtonsoftJson();
+            services.AddHttpContextAccessor();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseHttpsRedirection();
-
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
             app.UseRouting();
-
-            app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
