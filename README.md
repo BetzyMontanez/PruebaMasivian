@@ -19,7 +19,7 @@ setx ROULETTE_CONNECTION_STRING mongodb://localhost:27017 /m
 setx ROULETTE_DATABASE_NAME RouletteDB /m
 ```
 
-## API CURLs examples
+## API CURLs samples
 ### Create new roulette
 ```
 curl --location --request POST 'http://localhost:5000/roulettes/'
